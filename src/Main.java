@@ -21,7 +21,7 @@ public class Main extends PApplet{
 	//Int
 	int screen;
 	//Boolean
-	boolean left, right;
+	boolean left, right, shoot;
 	
 	@Override
 	public void setup() {
@@ -34,6 +34,7 @@ public class Main extends PApplet{
 		
 		//Boolean
 		left = false;					right = false;
+		shoot = false;
 		
 	}
 	
@@ -46,6 +47,7 @@ public class Main extends PApplet{
 			break;
 		case 1:
 			playScreen.draw();
+			keyMovements();
 			break;
 		}
 		
@@ -63,8 +65,44 @@ public class Main extends PApplet{
 	
 	@Override
 	public void keyPressed() {
-		playScreen.getShip().moveShip(key);
+		switch (key) {
+		case 'a':
+			left = true;
+			break;
+		case 'd':
+			right = true;
+			break;
+		case ' ':
+			shoot = true;
+			break;
+		}
+	}
+	
+	@Override
+	public void keyReleased() {
+		switch (key) {
+		case 'a':
+			left = false;
+			break;
+		case 'd':
+			right = false;
+			break;
+		}
+	}
+	
+	private void keyMovements() {
+		if (left == true) {
+			playScreen.getShip().moveShipLeft();
+		}
 		
+		if (right == true) {
+			playScreen.getShip().moveShipRight();
+		}
+
+		if (shoot == true) {
+			playScreen.getShip().generateBullets();
+			shoot = false;
+		}
 	}
 	
 }
