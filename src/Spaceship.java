@@ -8,18 +8,15 @@ public class Spaceship {
 	
 	private PApplet app;
 	private PImage ship;
-	private int x, y, life, coolDown, speed;
+	private int x, y, coolDown, speed;
 	private ArrayList<Bullet> bullets;
 	
 	public Spaceship(PApplet app) {
 		this.app = app;
 		this.x = 600;
 		this.y = 570;
-		this.life = 25;
 		this.speed = 30;
 		this.coolDown = 0;
-		this.life = 30; //Every 6 points eliminated, 1 heart is eliminated
-		
 		
 		//Images
 		ship = app.loadImage("./data/Spaceship.png");
@@ -36,7 +33,7 @@ public class Spaceship {
 		//CoolDown 
 		if (coolDown > 0) {
 			coolDown--;
-		}
+		}	
 	}
 	
 	public void moveShipLeft() {
@@ -93,14 +90,5 @@ public class Spaceship {
 	public ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
-	
-	public int getLife() {
-		return life;
-	}
-
-	public void setLife(int life) {
-		this.life = life;
-	}
-
 	
 }

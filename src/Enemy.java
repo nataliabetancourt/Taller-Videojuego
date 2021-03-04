@@ -5,7 +5,7 @@ import processing.core.PImage;
 public class Enemy {
 	
 	protected PApplet app;
-	protected int x, y, life, speed, width, height, damage;
+	protected int x, y, life, speed, width, height, damage, points;
 	protected boolean visible;
 
 	public Enemy(PApplet app, int x, int y) {
@@ -18,6 +18,7 @@ public class Enemy {
 		this.height = 85;
 		this.visible = true;
 		this.damage = 1;
+		this.points = 10;
 	}
 
 	public void draw(PImage img) {
@@ -63,5 +64,9 @@ public class Enemy {
 	
 	public int getDamage() {
 		return damage;
+	}
+	
+	public int getPoints() {
+		return points;
 	}
 }

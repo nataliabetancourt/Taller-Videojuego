@@ -10,7 +10,6 @@ public class EnemyBasic  extends Enemy{
 		this.bounce = 0;
 		this.speed = 4;
 		this.life = 2;
-		
 	}
 
 	@Override
@@ -37,4 +36,5 @@ public class EnemyBasic  extends Enemy{
 			break;
 		}
 	}
+
 }
