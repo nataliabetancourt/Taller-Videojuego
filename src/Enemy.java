@@ -12,8 +12,8 @@ public class Enemy {
 		this.app = app;
 		this.x = x;
 		this.y = y;
-		this.life = 4;
-		this.speed = 10;
+		this.life = 2;
+		this.speed = 4;
 		this.width = 100;
 		this.height = 85;
 		this.visible = true;
@@ -69,4 +69,9 @@ public class Enemy {
 	public int getPoints() {
 		return points;
 	}
+	
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
 }

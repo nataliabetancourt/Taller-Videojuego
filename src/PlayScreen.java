@@ -9,33 +9,36 @@ public class PlayScreen {
 	
 	private PApplet app;
 	private PFont font;
-	private PImage background, bar, life, greenAlien;
+	private PImage background, bar, life, greenAlien, pinkAlien;
 	private Spaceship ship;
 	private ArrayList<Enemy> aliensGreen;
-	private int frames, time, minutes, seconds, points, lifeShip, hearts;
-	private boolean damage;
+	private ArrayList<EnemyShooter> aliensPink;
+	private int frames, time, minutes, seconds, points, lifeShip, hearts, time1, time2;
 	
 	public PlayScreen(PApplet app) {
 		this.app = app;
-		this.frames = 40;
+		this.frames = 80;
 		this.time = 0;
 		this.minutes = 0;
 		this.seconds = 0;
 		this.points = 0;
 		this.lifeShip = 0;
 		this.hearts = 5;
-		this.damage = false;
+		this.time1 = 0;
+		this.time2 = 0;
 		
 		//Class and ArrayLists
 		ship = new Spaceship(app);
 		aliensGreen = new ArrayList<>();
+		aliensPink = new ArrayList<>();
 		
 		//Images
 		background = app.loadImage ("./data/playscreen.jpg");		bar = app.loadImage("./data/bar.png");
 		life = app.loadImage("./data/heart.png");							greenAlien = app.loadImage("./data/Green alien.png");
+		pinkAlien = app.loadImage("./data/Pink Alien.png");
 		
 		//Font
-		font = app.createFont("Orbitron-Medium.ttf", 20);
+		font = app.createFont("Orbitron-Medium.ttf", 20);				
 	}
 	
 	public void draw() {
@@ -53,9 +56,13 @@ public class PlayScreen {
 		//Class elements
 		ship.draw();
 		ship.shoot();
-		addGreenAliens();
+		ship.eliminateBullet();
+		addAliens();
 		drawGreenAliens();
 		greenAliensImpacts();
+		drawPinkAliens();
+		pinkAliensImpacts();
+		
 	}
 	
 	private void playTime() {
@@ -74,7 +81,7 @@ public class PlayScreen {
 		app.textFont(font);
 		if (seconds<10 && minutes<10) {
 			app.text("Tiempo: " + "0" + minutes + ":" + "0" + seconds, 1000, 670);
-		}  else if (seconds > 10 && minutes < 10) {
+		}  else if (seconds >= 10 && minutes < 10) {
 			app.text("Tiempo: " + "0" + minutes + ":" + seconds, 1000, 670);
 		}
 
@@ -94,24 +101,32 @@ public class PlayScreen {
 				}
 				
 			if (hearts == 0) {
-					//Gameover
+					//Game over
 				}
-			
 		}
 	}
 
-	private void addGreenAliens() {
-		app.frameRate(frames);
-		int xTemp = 0;
-		int yTemp = 115;
-		if (app.frameCount == frames) {
-			app.frameCount = 0;
-			aliensGreen.add(new EnemyBasic(app, xTemp, yTemp));
+	private void addAliens() {
+		app.frameRate(60);
+		int xTemp1 = 0;
+		int yTemp1 = 145;
+		int xTemp2 = (int) (60 + Math.random() * 1100);
+		int yTemp2 = 60;
+		
+		if (app.frameCount%27 == 0) {
+			aliensGreen.add(new EnemyBasic(app, xTemp1, yTemp1));
+			System.out.println("f");
 		}
 		
-		if (seconds == 30) {
-			frames = 30;
+		if (app.frameCount%200 == 0 && seconds >= 45) {
+			aliensPink.add(new EnemyShooter(app, xTemp2, yTemp2));
+			System.out.println("f");
 		}
+		
+		System.out.println(time1);
+		System.out.println(time2);
+		System.out.println("---------------------");
+		System.out.println("Aliens: " + aliensPink.size());
 	}
 	
 	private void drawGreenAliens() {
@@ -123,16 +138,29 @@ public class PlayScreen {
 	
 	private void greenAliensImpacts() {
 		for (int i = 0; i < aliensGreen.size(); i++) {
+			//Dificulty depending on time
+			if (seconds == 5) {
+				aliensGreen.get(i).setSpeed(8);
+			}
+			
+			if (seconds == 10) {
+				aliensGreen.get(i).setSpeed(10);
+			}
+			
+			if ( seconds == 15) {
+				aliensGreen.get(i).setSpeed(14);
+			}
+			
 			//Enemy and border
 			if (aliensGreen.get(i).getY() > 700) {
-				lifeShip += aliensGreen.get(i).getDamage();
+				//lifeShip += aliensGreen.get(i).getDamage();
 				aliensGreen.remove(i);
 			}
 			
 			//Enemy and Ship
 			double distanceEandS =distanceBetweenPoints(aliensGreen.get(i).getX(), ship.getX(), aliensGreen.get(i).getY(), ship.getX());
 			if (distanceEandS < ship.getX()) {
-				lifeShip += aliensGreen.get(i).getDamage();
+				//lifeShip += aliensGreen.get(i).getDamage();
 			}
 			
 			//Enemies and bullets
@@ -142,11 +170,47 @@ public class PlayScreen {
 					aliensGreen.get(i).setLife(aliensGreen.get(i).getLife()-ship.getBullets().get(j).getDamage());
 					ship.getBullets().get(j).setVisible(false);
 					ship.getBullets().get(j).setDamage(0);
-					points += aliensGreen.get(i).getPoints();
 				}
 				
 				if (aliensGreen.get(i).getLife() == 0) {	
+					points += aliensGreen.get(i).getPoints();
 					aliensGreen.remove(i);
+				}
+			}
+		}
+	}
+	
+	private void drawPinkAliens() {
+		for (int i = 0; i < aliensPink.size(); i++) {
+			aliensPink.get(i).draw(pinkAlien);
+		}
+	}
+	
+	private void pinkAliensImpacts() {
+		for (int i = 0; i < aliensPink.size(); i++) {
+			//Enemy bullets against ship
+			for (int j = 0; j < aliensPink.get(i).getMeteors().size(); j++) {
+				double distanceMandS = distanceBetweenPoints(ship.getX(), aliensPink.get(i).getMeteors().get(j).getX(), 
+						ship.getY(),  aliensPink.get(i).getMeteors().get(j).getY());
+				if (distanceMandS < ship.getWidth()/2 && aliensPink.get(i).getMeteors().get(j).isVisible()) {
+					lifeShip += aliensPink.get(i).getDamage();
+					aliensPink.get(i).getMeteors().get(j).setVisible(false);
+				}
+			}
+			
+			//Ship bullets against pink aliens
+			for (int j = 0; j < ship.getBullets().size(); j++) {
+				double distanceBandA = distanceBetweenPoints(aliensPink.get(i).getX(), ship.getBullets().get(j).getX(), 
+						aliensPink.get(i).getY(), ship.getBullets().get(j).getY());
+				if (ship.getBullets().get(j).isVisible() && distanceBandA < aliensPink.get(i).getWidth()/2) {
+					aliensPink.get(i).setLife(aliensPink.get(i).getLife()-ship.getBullets().get(j).getDamage());
+					ship.getBullets().get(j).setVisible(false);
+					ship.getBullets().get(j).setDamage(0);
+					points += aliensPink.get(i).getPoints();
+					
+					if (aliensPink.get(i).getLife() == 0) {	
+						aliensPink.remove(i);
+					}
 				}
 			}
 		}

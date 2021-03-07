@@ -7,8 +7,8 @@ import processing.core.PImage;
 public class Spaceship {
 	
 	private PApplet app;
-	private PImage ship;
-	private int x, y, coolDown, speed;
+	private PImage ship, bullet;
+	private int x, y, coolDown, speed, width, height;
 	private ArrayList<Bullet> bullets;
 	
 	public Spaceship(PApplet app) {
@@ -17,9 +17,11 @@ public class Spaceship {
 		this.y = 570;
 		this.speed = 30;
 		this.coolDown = 0;
+		this.width = 70;
+		this.height = 130;
 		
 		//Images
-		ship = app.loadImage("./data/Spaceship.png");
+		ship = app.loadImage("./data/Spaceship.png");			bullet = app.loadImage("./data/Bullet.png");
 		
 		//Class and ArrayList
 		bullets = new ArrayList <>();
@@ -28,7 +30,7 @@ public class Spaceship {
 	
 	public void draw() {
 		app.imageMode(PConstants.CENTER);
-		app.image(ship, x, y, 70, 130);
+		app.image(ship, x, y, width, height);
 		
 		//CoolDown 
 		if (coolDown > 0) {
@@ -62,13 +64,17 @@ public class Spaceship {
 	
 	public void shoot() {
 		for (int i = 0; i < bullets.size(); i++) {
-			bullets.get(i).draw();
+			bullets.get(i).draw(bullet);
 			bullets.get(i).move();
 		}
 	}
 	
 	public void eliminateBullet() {
-		
+		for (int i = 0; i < bullets.size(); i++) {
+			if (bullets.get(i).getY() < 0) {
+				bullets.remove(i);
+			}
+		}
 	}
 
 	public int getX() {
@@ -90,5 +96,14 @@ public class Spaceship {
 	public ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
 	
 }

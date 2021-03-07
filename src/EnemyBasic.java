@@ -3,13 +3,12 @@ import processing.core.PImage;
 
 public class EnemyBasic  extends Enemy{
 
-	private int bounce, speed;
+	private int bounce;
 
 	public EnemyBasic(PApplet app, int x, int y) {
 		super(app, x, y);
 		this.bounce = 0;
-		this.speed = 4;
-		this.life = 2;
+		this.life = 4;
 	}
 
 	@Override
@@ -36,5 +35,4 @@ public class EnemyBasic  extends Enemy{
 			break;
 		}
 	}
-
 }

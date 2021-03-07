@@ -8,7 +8,6 @@ public class Bullet {
 	
 	private PApplet app;
 	private int x, y, speed, damage;
-	private PImage bullet;
 	private boolean visible;
 
 	PlayScreen play;
@@ -20,20 +19,23 @@ public class Bullet {
 		this.speed = 25;
 		this.visible = true;
 		this.damage = 2;
-		
-		//Images
-		bullet = app.loadImage("./data/Bullet.png");
+
 	}
 	
-	public void draw() {
+	public void draw(PImage img) {
 		if (visible == true) {
 			app.imageMode(PConstants.CENTER);
-			app.image(bullet, x, y, 30, 35);
+			app.image(img, x, y, 30, 35);
 		}
 	}
 	
 	public void move() {
 		y-=speed;
+	}
+	
+	public void moveEnemy() {
+		y+=speed;
+
 	}
 
 	public int getX() {
