@@ -93,6 +93,8 @@ public class Main extends PApplet{
 			screen = 2;
 		}
 	
+		System.out.println(gameover.getScreen());
+		System.out.println(screen);
 	}
 
 	@Override
