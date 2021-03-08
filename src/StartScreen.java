@@ -6,7 +6,7 @@ public class StartScreen {
 	
 	private PApplet app;
 	private PImage background, start;
-	private int xButton, yStart, yIns;
+	private int xButton, yStart;
 	private int screen;
 
 	public StartScreen(PApplet app) {
@@ -14,7 +14,6 @@ public class StartScreen {
 		//Coordinations of buttons
 		this.xButton = 600;
 		this.yStart = 580;
-		this.yIns = 630;
 		this.screen = 0;
 		
 		//Images

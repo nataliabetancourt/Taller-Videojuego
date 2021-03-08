@@ -79,6 +79,13 @@ public class Main extends PApplet{
 		//Gameover screen
 		if (playScreen.isGameover() == true) {
 			screen = 3;
+			int seconds = playScreen.getSeconds();
+			int minutes = playScreen.getMinutes();
+			int points = playScreen.getPoints();
+			
+			gameover.setSeconds(seconds);
+			gameover.setMinutes(minutes);
+			gameover.setPoints(points);
 		}
 		
 		//Play screen

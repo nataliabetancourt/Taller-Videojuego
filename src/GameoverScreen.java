@@ -9,17 +9,16 @@ public class GameoverScreen {
 	private PImage background, restart;
 	private PFont font;
 	private int xButton, yButton;
-	private int screen;
-	private PlayScreen play;
+	private int screen, seconds, minutes, points;
 	
 	public GameoverScreen(PApplet app) {
 		this.app = app;
 		this.xButton = 600;
 		this.yButton = 600;
 		this.screen = 0;
-		
-		//Class
-		play = new PlayScreen(app);
+		this.seconds = 0;
+		this.minutes = 0;
+		this.points = 0;
 		
 		//Images
 		background = app.loadImage("./data/Gameover.jpg");			restart = app.loadImage("./data/Restart Button.png");
@@ -35,18 +34,20 @@ public class GameoverScreen {
 		//Back button
 		app.imageMode(PConstants.CENTER);
 		app.image(restart, xButton, yButton, 200, 40);
+		
 		//Time
 		app.fill(255);
 		app.textFont(font);
 		app.textAlign(PConstants.CENTER);
-		if (play.getSeconds()<10 && play.getMinutes()<10) {
-			app.text("Tiempo: " + "0" + play.getMinutes() + ":" + "0" + play.getSeconds(), 600, 370);
-		}  else if (play.getSeconds() >= 10 && play.getMinutes() < 10) {
-			app.text("Tiempo: " + "0" + play.getMinutes() + ":" + play.getSeconds(), 600, 380);
+		if (seconds<10 && minutes<10) {
+			app.text("Tiempo: " + "0" + minutes + ":" + "0" + seconds, 600, 370);
+		}  else if (seconds >= 10 && minutes < 10) {
+			app.text("Tiempo: " + "0" + minutes + ":" + seconds, 600, 380);
 		}
+		
 		//Points
 		app.textFont(font);
-		app.text("Points: " + play.getPoints(), 600, 440);
+		app.text("Points: " +points, 600, 440);
 
 	}
 	
@@ -58,6 +59,18 @@ public class GameoverScreen {
 	
 	public int getScreen() {
 		return screen;
+	}
+	
+	public void setSeconds(int seconds) {
+		this.seconds = seconds;
+	}
+	
+	public void setMinutes(int minutes) {
+		this.minutes = minutes;
+	}
+	
+	public void setPoints(int points) {
+		this.points = points;
 	}
 
 }

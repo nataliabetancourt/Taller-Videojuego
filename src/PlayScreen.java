@@ -13,7 +13,7 @@ public class PlayScreen {
 	private Spaceship ship;
 	private ArrayList<Enemy> aliensGreen;
 	private ArrayList<EnemyShooter> aliensPink;
-	private int time, minutes, seconds, points, lifeShip, hearts, time1, time2, vulnerable;
+	private int time, minutes, seconds, points, lifeShip, hearts, vulnerable;
 	private boolean gameover;
 	
 	public PlayScreen(PApplet app) {
@@ -24,8 +24,6 @@ public class PlayScreen {
 		this.points = 0;
 		this.lifeShip = 0;
 		this.hearts = 5;
-		this.time1 = 0;
-		this.time2 = 0;
 		this.vulnerable = 0;
 		this.gameover = false;
 		
@@ -60,7 +58,7 @@ public class PlayScreen {
 		
 		//Elements for the screen
 		//Bar
-		app.image(bar, 0, 635, 1200, 60);
+		app.image(bar, 600, 660, 1200, 60);
 		//Points, time and life
 		app.textFont(font);
 		app.text("Points: " + points, 560, 670);
@@ -71,7 +69,6 @@ public class PlayScreen {
 		if (vulnerable > 0) {
 			vulnerable--;
 		}	
-		
 	}
 	
 	private void playTime() {
@@ -93,7 +90,6 @@ public class PlayScreen {
 		}  else if (seconds >= 10 && minutes < 10) {
 			app.text("Tiempo: " + "0" + minutes + ":" + seconds, 1000, 670);
 		}
-
 	}
 
 	private void shipLife() {
@@ -104,7 +100,7 @@ public class PlayScreen {
 			app.imageMode(PConstants.CENTER);
 			app.image(life, xLife + (i*50), yLife, 40, 40);
 			
-			if (lifeShip == 6) {
+			if (lifeShip == 1) {
 					lifeShip = 0;
 					hearts -= 1;
 				}
@@ -162,9 +158,10 @@ public class PlayScreen {
 			
 			//Enemy and Ship
 			double distanceEandS =distanceBetweenPoints(aliensGreen.get(i).getX(), ship.getX(), aliensGreen.get(i).getY(), ship.getX());
-			if (distanceEandS < ship.getX()/2) {
+			if (distanceEandS < 120) {
 				if (vulnerable == 0) {
 					lifeShip += aliensGreen.get(i).getDamage();
+					vulnerable = 60;
 				}
 			}
 			
@@ -197,9 +194,10 @@ public class PlayScreen {
 			for (int j = 0; j < aliensPink.get(i).getMeteors().size(); j++) {
 				double distanceMandS = distanceBetweenPoints(ship.getX(), aliensPink.get(i).getMeteors().get(j).getX(), 
 						ship.getY(),  aliensPink.get(i).getMeteors().get(j).getY());
-				if (distanceMandS < ship.getWidth()/2 && aliensPink.get(i).getMeteors().get(j).isVisible()) {
+				if (distanceMandS < 120 && aliensPink.get(i).getMeteors().get(j).isVisible()) {
 					if (vulnerable == 0) {
 						lifeShip += aliensGreen.get(i).getDamage();
+						vulnerable = 60;
 					}
 					aliensPink.get(i).getMeteors().get(j).setVisible(false);
 				}
