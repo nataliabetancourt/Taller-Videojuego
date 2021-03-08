@@ -18,6 +18,7 @@ public class Main extends PApplet{
 	StartScreen start;
 	PlayScreen playScreen;
 	GameoverScreen gameover;
+	InstructionScreen instructions;
 	//Int
 	int screen;
 	//Boolean
@@ -29,9 +30,10 @@ public class Main extends PApplet{
 		start = new StartScreen(this);
 		playScreen = new PlayScreen(this);
 		gameover = new GameoverScreen(this);
+		instructions = new InstructionScreen(this);
 		
 		//Int
-		screen = 3;
+		screen = 0;
 		
 		//Boolean
 		left = false;					right = false;
@@ -47,8 +49,12 @@ public class Main extends PApplet{
 		case 0:
 			start.draw();
 			break;
-		//Play Screen
+		//Instructions
 		case 1:
+			instructions.draw();
+			break;
+		//Play Screen
+		case 2:
 			playScreen.draw();
 			keyMovements();
 			break;
@@ -59,23 +65,34 @@ public class Main extends PApplet{
 		}
 		
 		//Set screen from classes
+		
+		//Instructions
 		if (start.getScreen() == 1) {
 			screen = 1;
 		}
 		
+		//Play
+		if (instructions.getScreen() == 2) {
+			screen = 2;
+		}
+		
+		//Gameover screen
 		if (playScreen.isGameover() == true) {
 			screen = 3;
 		}
 		
-		if (gameover.getScreen() == 1) {
-			screen = 1;
+		//Play screen
+		if (gameover.getScreen() == 2) {
+			screen = 2;
 		}
+	
 	}
 
 	@Override
 	public void mouseClicked() {
 		start.ClickButtons();
 		gameover.ClickButton();
+		instructions.ClickButtons();
 
 	}
 	

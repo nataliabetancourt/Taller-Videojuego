@@ -40,7 +40,7 @@ public class GameoverScreen {
 		app.textFont(font);
 		app.textAlign(PConstants.CENTER);
 		if (play.getSeconds()<10 && play.getMinutes()<10) {
-			app.text("Tiempo: " + "0" + play.getMinutes() + ":" + "0" + play.getSeconds(), 600, 380);
+			app.text("Tiempo: " + "0" + play.getMinutes() + ":" + "0" + play.getSeconds(), 600, 370);
 		}  else if (play.getSeconds() >= 10 && play.getMinutes() < 10) {
 			app.text("Tiempo: " + "0" + play.getMinutes() + ":" + play.getSeconds(), 600, 380);
 		}
@@ -52,7 +52,7 @@ public class GameoverScreen {
 	
 	public void ClickButton() {
 		if (app.mouseX > xButton-100 && app.mouseX < xButton+100 && app.mouseY > yButton-20 && app.mouseY < yButton+20) {
-			screen = 1;
+			screen = 2;
 		}
 	}
 	
