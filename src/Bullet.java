@@ -1,5 +1,3 @@
-import java.awt.Image;
-
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;

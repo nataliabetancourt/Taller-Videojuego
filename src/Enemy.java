@@ -13,7 +13,7 @@ public class Enemy {
 		this.x = x;
 		this.y = y;
 		this.life = 2;
-		this.speed = 4;
+		this.speed = 5;
 		this.width = 100;
 		this.height = 85;
 		this.visible = true;

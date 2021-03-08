@@ -13,11 +13,11 @@ public class PlayScreen {
 	private Spaceship ship;
 	private ArrayList<Enemy> aliensGreen;
 	private ArrayList<EnemyShooter> aliensPink;
-	private int frames, time, minutes, seconds, points, lifeShip, hearts, time1, time2;
+	private int time, minutes, seconds, points, lifeShip, hearts, time1, time2, vulnerable;
+	private boolean gameover;
 	
 	public PlayScreen(PApplet app) {
 		this.app = app;
-		this.frames = 80;
 		this.time = 0;
 		this.minutes = 0;
 		this.seconds = 0;
@@ -26,6 +26,8 @@ public class PlayScreen {
 		this.hearts = 5;
 		this.time1 = 0;
 		this.time2 = 0;
+		this.vulnerable = 0;
+		this.gameover = false;
 		
 		//Class and ArrayLists
 		ship = new Spaceship(app);
@@ -48,6 +50,7 @@ public class PlayScreen {
 		app.image(background, 0, 0, 1200, 700);
 		//Bar
 		app.image(bar, 0, 635, 1200, 60);
+		//Points, time and life
 		app.textFont(font);
 		app.text("Points: " + points, 560, 670);
 		playTime();
@@ -62,6 +65,11 @@ public class PlayScreen {
 		greenAliensImpacts();
 		drawPinkAliens();
 		pinkAliensImpacts();
+		
+		//Countdown for damage on ship
+		if (vulnerable > 0) {
+			vulnerable--;
+		}	
 		
 	}
 	
@@ -86,7 +94,7 @@ public class PlayScreen {
 		}
 
 	}
-	
+
 	private void shipLife() {
 		int xLife = 50;
 		int yLife = 665;
@@ -101,11 +109,11 @@ public class PlayScreen {
 				}
 				
 			if (hearts == 0) {
-					//Game over
+					gameover = true;
 				}
 		}
 	}
-
+	
 	private void addAliens() {
 		app.frameRate(60);
 		int xTemp1 = 0;
@@ -113,7 +121,7 @@ public class PlayScreen {
 		int xTemp2 = (int) (60 + Math.random() * 1100);
 		int yTemp2 = 60;
 		
-		if (app.frameCount%27 == 0) {
+		if (app.frameCount%32 == 0) {
 			aliensGreen.add(new EnemyBasic(app, xTemp1, yTemp1));
 			System.out.println("f");
 		}
@@ -138,29 +146,25 @@ public class PlayScreen {
 	
 	private void greenAliensImpacts() {
 		for (int i = 0; i < aliensGreen.size(); i++) {
-			//Dificulty depending on time
-			if (seconds == 5) {
-				aliensGreen.get(i).setSpeed(8);
-			}
-			
-			if (seconds == 10) {
-				aliensGreen.get(i).setSpeed(10);
-			}
-			
-			if ( seconds == 15) {
-				aliensGreen.get(i).setSpeed(14);
+			//Difficulty
+			if (minutes >= 2) {
+				aliensGreen.get(i).setSpeed(6);
 			}
 			
 			//Enemy and border
 			if (aliensGreen.get(i).getY() > 700) {
-				//lifeShip += aliensGreen.get(i).getDamage();
+				if (vulnerable == 0) {
+					lifeShip += aliensGreen.get(i).getDamage();
+				}
 				aliensGreen.remove(i);
 			}
 			
 			//Enemy and Ship
 			double distanceEandS =distanceBetweenPoints(aliensGreen.get(i).getX(), ship.getX(), aliensGreen.get(i).getY(), ship.getX());
-			if (distanceEandS < ship.getX()) {
-				//lifeShip += aliensGreen.get(i).getDamage();
+			if (distanceEandS < ship.getX()/2) {
+				if (vulnerable == 0) {
+					lifeShip += aliensGreen.get(i).getDamage();
+				}
 			}
 			
 			//Enemies and bullets
@@ -222,6 +226,22 @@ public class PlayScreen {
 	
 	public Spaceship getShip() {
 		return ship;
+	}
+	
+	public int getMinutes() {
+		return minutes;
+	}
+
+	public int getSeconds() {
+		return seconds;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+	
+	public boolean isGameover() {
+		return gameover;
 	}
 
 

@@ -1,5 +1,4 @@
 import processing.core.PApplet;
-import processing.core.PConstants;
 
 public class Main extends PApplet{
 
@@ -18,6 +17,7 @@ public class Main extends PApplet{
 	//Class
 	StartScreen start;
 	PlayScreen playScreen;
+	GameoverScreen gameover;
 	//Int
 	int screen;
 	//Boolean
@@ -28,9 +28,10 @@ public class Main extends PApplet{
 		//Class
 		start = new StartScreen(this);
 		playScreen = new PlayScreen(this);
+		gameover = new GameoverScreen(this);
 		
 		//Int
-		screen = 0;
+		screen = 3;
 		
 		//Boolean
 		left = false;					right = false;
@@ -42,12 +43,18 @@ public class Main extends PApplet{
 	public void draw() {
 		//Screens
 		switch (screen) {
+		//Start Screen
 		case 0:
 			start.draw();
 			break;
+		//Play Screen
 		case 1:
 			playScreen.draw();
 			keyMovements();
+			break;
+		//Gameover screen
+		case 3:
+			gameover.draw();
 			break;
 		}
 		
@@ -56,11 +63,20 @@ public class Main extends PApplet{
 			screen = 1;
 		}
 		
+		if (playScreen.isGameover() == true) {
+			screen = 3;
+		}
+		
+		if (gameover.getScreen() == 1) {
+			screen = 1;
+		}
 	}
 
 	@Override
 	public void mouseClicked() {
 		start.ClickButtons();
+		gameover.ClickButton();
+
 	}
 	
 	@Override
