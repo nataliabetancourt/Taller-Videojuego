@@ -225,6 +225,21 @@ public class PlayScreen {
 		return Math.sqrt((y2 - y1)*(y2 - y1) + (x2 - x1)*(x2 - x1));
 	}
 	
+	public void restart() {
+		this.time = 0;
+		this.minutes = 0;
+		this.seconds = 0;
+		this.points = 0;
+		this.lifeShip = 0;
+		this.hearts = 5;
+		this.vulnerable = 0;
+		this.gameover = false;
+		
+		//ArrayLists
+		aliensGreen.clear();
+		aliensPink.clear();
+	}
+	
 	public Spaceship getShip() {
 		return ship;
 	}

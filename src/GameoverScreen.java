@@ -51,12 +51,6 @@ public class GameoverScreen {
 
 	}
 	
-	public void ClickButton() {
-		if (app.mouseX > xButton-100 && app.mouseX < xButton+100 && app.mouseY > yButton-20 && app.mouseY < yButton+20) {
-			screen = 2;
-		}
-	}
-	
 	public int getScreen() {
 		return screen;
 	}
@@ -71,6 +65,14 @@ public class GameoverScreen {
 	
 	public void setPoints(int points) {
 		this.points = points;
+	}
+	
+	public int getxButton() {
+		return xButton;
+	}
+	
+	public int getyButton() {
+		return yButton;
 	}
 
 }

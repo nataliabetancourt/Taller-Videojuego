@@ -87,11 +87,6 @@ public class Main extends PApplet{
 			gameover.setMinutes(minutes);
 			gameover.setPoints(points);
 		}
-		
-		//Play screen
-		if (gameover.getScreen() == 2) {
-			screen = 2;
-		}
 	
 		System.out.println(gameover.getScreen());
 		System.out.println(screen);
@@ -100,8 +95,13 @@ public class Main extends PApplet{
 	@Override
 	public void mouseClicked() {
 		start.ClickButtons();
-		gameover.ClickButton();
 		instructions.ClickButtons();
+		
+		//Restart button, switch to playscreen and reset the variables in playscreen
+		if (mouseX > 500 && mouseX < 700 && mouseY > 580 && mouseY < 620) {
+			screen = 2;
+			playScreen.restart();
+		}
 
 	}
 	
