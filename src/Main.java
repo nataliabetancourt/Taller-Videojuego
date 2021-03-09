@@ -87,9 +87,7 @@ public class Main extends PApplet{
 			gameover.setMinutes(minutes);
 			gameover.setPoints(points);
 		}
-	
-		System.out.println(gameover.getScreen());
-		System.out.println(screen);
+
 	}
 
 	@Override

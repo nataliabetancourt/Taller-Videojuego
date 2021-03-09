@@ -100,7 +100,7 @@ public class PlayScreen {
 			app.imageMode(PConstants.CENTER);
 			app.image(life, xLife + (i*50), yLife, 40, 40);
 			
-			if (lifeShip == 1) {
+			if (lifeShip == 2) {
 					lifeShip = 0;
 					hearts -= 1;
 				}
@@ -148,6 +148,10 @@ public class PlayScreen {
 			
 			if (minutes >= 2) {
 				aliensGreen.get(i).setSpeed(10);
+			}
+			
+			if (minutes >= 2 && seconds >= 30) {
+				aliensGreen.get(i).setLife(4);
 			}
 			
 			//Enemy and border

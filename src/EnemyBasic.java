@@ -8,7 +8,6 @@ public class EnemyBasic  extends Enemy{
 	public EnemyBasic(PApplet app, int x, int y) {
 		super(app, x, y);
 		this.bounce = 0;
-		this.life = 4;
 	}
 
 	@Override
